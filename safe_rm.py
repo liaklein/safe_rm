@@ -15,10 +15,10 @@ def main(local):
     filepath = path + local #hm this means you can only call safe rm on local files. extend functionality later
     #write the proper information to the index
     index = open(mydir+".index",'a')
-    index.write(filepath)
+    index.write(filepath+"\n")
     #do the move
     #bug if there is a name clash.
-    command = "mv " + local + " " + mydir
+    command = "mv " + local + " " + mydir + "trash/"
     sp.call(command.split())
 
 
