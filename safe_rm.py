@@ -11,8 +11,7 @@ def main(local):
     me =  os.path.realpath(__file__)
     mydir = os.path.dirname(me) + "/"
     #then you need to find the current working directory
-    path = os.getcwd() + "/"
-    filepath = path + local #hm this means you can only call safe rm on local files. extend functionality later
+    filepath = os.path.realpath(local)
     #write the proper information to the index
     index = open(mydir+".index",'a')
     index.write(filepath+"\n")
@@ -20,7 +19,6 @@ def main(local):
     #bug if there is a name clash.
     command = "mv " + local + " " + mydir + "trash/"
     sp.call(command.split())
-
 
 if __name__=="__main__":
     main(sys.argv[1])
