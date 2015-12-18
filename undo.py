@@ -4,6 +4,10 @@ import os
 import argparse
 import subprocess as sp
 
+def path_to_name(date,path):
+    #replace / with _
+    return str(date) + path.replace('/','_')
+
 def main():
     #first you need to find the location of the script itelf. weird
     me =  os.path.realpath(__file__)
@@ -12,7 +16,8 @@ def main():
     
     #figure out what you are moving back by reading the .index file
     lines = index.readlines()
-    fpath = lines[len(lines)-1]
+    last = lines[len(lines)-1]
+    date,filepath = last.split()
     index.close()
     index = open(mydir+".index",'w')
 
@@ -22,11 +27,13 @@ def main():
     index.close()
 
     #get the local part of the file name
-    dirs = fpath.split("/")
-    local = dirs[len(dirs) - 1]
+    #dirs = filepath.split("/")
+    #local = dirs[len(dirs) - 1]
+
+    fname = path_to_name(date,filepath)
 
     #move it back
-    command = "mv "+ mydir+"/trash/" + local + " " + fpath
+    command = "mv "+ mydir+"/trash/" + fname + " " + filepath
     sp.call(command.split())
 
 if __name__=="__main__":
